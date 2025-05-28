@@ -8,12 +8,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
-    <!-- Firebase App (base) -->
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
 
-    <!-- Firebase Authentication -->
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
 
+
+    <!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js"></script>
+<!-- Firebase Analytics -->
+<script src="https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js"></script>
+
+<script>
+  // Configuração do Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBIhkg9kqxMqep1gixoI7mkCo6b3j9DnoI",
+    authDomain: "connectcorretores-70cec.firebaseapp.com",
+    projectId: "connectcorretores-70cec",
+    storageBucket: "connectcorretores-70cec.firebasestorage.app",
+    messagingSenderId: "272445820844",
+    appId: "1:272445820844:web:5b7fcd6495d9016767f409",
+    measurementId: "G-M8HKBE7EC7"
+  };
+
+  // Inicializa o Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const analytics = firebase.analytics(app);
+</script>
+
+    
+
+    
 </head>
 <body>
     <!-- Overlay de carregamento -->
