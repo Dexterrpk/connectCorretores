@@ -543,28 +543,13 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        // Importar Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
-
-        // Configuração Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBIhkg9kqxMqep1gixoI7mkCo6b3j9DnoI",
-            authDomain: "connectcorretores-70cec.firebaseapp.com",
-            projectId: "connectcorretores-70cec",
-            storageBucket: "connectcorretores-70cec.firebasestorage.app",
-            messagingSenderId: "272445820844",
-            appId: "1:272445820844:web:5b7fcd6495d9016767f409",
-            measurementId: "G-M8HKBE7EC7"
-        };
-
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
+        // Importar configurações e utilitários
+        import { app, auth, db, storage, appConfig, collections, utils } from './config.js';
+        
+        // Importar funções do Firebase
+        import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+        import { doc, setDoc, getDoc, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+        import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
 
         // Elementos DOM
         const loginBtn = document.getElementById('loginBtn');
@@ -670,7 +655,7 @@
                 const user = userCredential.user;
 
                 // Salvar dados do usuário no Firestore
-                await setDoc(doc(db, 'users', user.uid), {
+                await setDoc(doc(db, collections.users, user.uid), {
                     name: name,
                     email: email,
                     phone: phone,
@@ -680,6 +665,11 @@
 
                 document.getElementById('registerSuccess').textContent = 'Conta criada com sucesso!';
                 document.getElementById('registerSuccess').style.display = 'block';
+                
+                // Track analytics
+                utils.trackEvent('user_registered', {
+                    method: 'email'
+                });
             } catch (error) {
                 errorDiv.textContent = getErrorMessage(error.code);
                 errorDiv.style.display = 'block';
@@ -714,18 +704,55 @@
             successDiv.style.display = 'none';
 
             try {
-                // Upload das imagens
-                const imageUrls = [];
+                // Validar dados antes de salvar
+                const validationErrors = utils.validatePropertyData({
+                    title: title,
+                    price: price,
+                    area: area,
+                    description: description
+                });
+
+                if (validationErrors.length > 0) {
+                    errorDiv.textContent = validationErrors.join(', ');
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // Validar imagens
+                const validImages = [];
                 for (let i = 0; i < images.length; i++) {
                     const image = images[i];
-                    const imageRef = ref(storage, `properties/${currentUser.uid}/${Date.now()}_${image.name}`);
+                    if (!utils.isValidImageType(image)) {
+                        errorDiv.textContent = 'Tipo de imagem não suportado: ' + image.name;
+                        errorDiv.style.display = 'block';
+                        return;
+                    }
+                    if (!utils.isValidImageSize(image)) {
+                        errorDiv.textContent = 'Imagem muito grande: ' + image.name + '. Máximo 5MB.';
+                        errorDiv.style.display = 'block';
+                        return;
+                    }
+                    validImages.push(image);
+                }
+
+                if (validImages.length > appConfig.features.maxImagesPerProperty) {
+                    errorDiv.textContent = `Máximo ${appConfig.features.maxImagesPerProperty} imagens por imóvel.`;
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // Upload das imagens
+                const imageUrls = [];
+                for (let i = 0; i < validImages.length; i++) {
+                    const image = validImages[i];
+                    const imageRef = ref(storage, `properties/${currentUser.uid}/${utils.generateId()}_${image.name}`);
                     const snapshot = await uploadBytes(imageRef, image);
                     const downloadURL = await getDownloadURL(snapshot.ref);
                     imageUrls.push(downloadURL);
                 }
 
                 // Salvar propriedade no Firestore
-                await addDoc(collection(db, 'properties'), {
+                await addDoc(collection(db, collections.properties), {
                     title: title,
                     type: type,
                     price: price,
@@ -735,7 +762,8 @@
                     ownerId: currentUser.uid,
                     createdAt: new Date(),
                     status: 'active',
-                    views: 0
+                    views: 0,
+                    featured: false
                 });
 
                 successDiv.textContent = 'Imóvel cadastrado com sucesso!';
@@ -744,12 +772,25 @@
                 // Limpar formulário
                 document.getElementById('propertyForm').reset();
                 
+                // Reset file upload display
+                document.querySelector('.file-upload').innerHTML = `
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #667eea; margin-bottom: 1rem;"></i>
+                    <p>Clique para selecionar imagens</p>
+                `;
+                
                 // Atualizar estatísticas
                 await loadUserStats();
 
+                // Track analytics
+                utils.trackEvent('property_created', {
+                    type: type,
+                    price: price,
+                    images_count: imageUrls.length
+                });
+
             } catch (error) {
-                console.error('Erro ao cadastrar imóvel:', error);
-                errorDiv.textContent = 'Erro ao cadastrar imóvel. Tente novamente.';
+                utils.log('Erro ao cadastrar imóvel: ' + error, 'error');
+                errorDiv.textContent = utils.getErrorMessage(error.code) || 'Erro ao cadastrar imóvel. Tente novamente.';
                 errorDiv.style.display = 'block';
             } finally {
                 btnText.classList.remove('hidden');
@@ -794,14 +835,14 @@
             if (!currentUser) return;
 
             try {
-                const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                const userDoc = await getDoc(doc(db, collections.users, currentUser.uid));
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     document.getElementById('userName').textContent = userData.name || 'Corretor';
                 }
                 await loadUserStats();
             } catch (error) {
-                console.error('Erro ao carregar dados do usuário:', error);
+                utils.log('Erro ao carregar dados do usuário: ' + error, 'error');
             }
         }
 
@@ -811,7 +852,7 @@
 
             try {
                 const propertiesQuery = query(
-                    collection(db, 'properties'),
+                    collection(db, collections.properties),
                     where('ownerId', '==', currentUser.uid)
                 );
                 
@@ -830,54 +871,42 @@
 
                 // Atualizar UI
                 document.getElementById('totalProperties').textContent = totalProperties;
-                document.getElementById('totalViews').textContent = totalViews;
+                document.getElementById('totalViews').textContent = utils.formatNumber(totalViews);
                 document.getElementById('pendingProperties').textContent = pendingProperties;
                 document.getElementById('totalMessages').textContent = '0'; // Implementar depois
 
+                // Track analytics
+                utils.trackEvent('stats_loaded', {
+                    total_properties: totalProperties,
+                    total_views: totalViews
+                });
+
             } catch (error) {
-                console.error('Erro ao carregar estatísticas:', error);
+                utils.log('Erro ao carregar estatísticas: ' + error, 'error');
             }
         }
 
-        // Função para traduzir erros do Firebase
+        // Função para traduzir erros do Firebase (agora usando utils)
         function getErrorMessage(errorCode) {
-            const errorMessages = {
-                'auth/user-not-found': 'Usuário não encontrado.',
-                'auth/wrong-password': 'Senha incorreta.',
-                'auth/email-already-in-use': 'Este email já está em uso.',
-                'auth/weak-password': 'A senha deve ter pelo menos 6 caracteres.',
-                'auth/invalid-email': 'Email inválido.',
-                'auth/network-request-failed': 'Erro de conexão. Verifique sua internet.',
-                'auth/too-many-requests': 'Muitas tentativas. Tente novamente mais tarde.',
-                'auth/user-disabled': 'Esta conta foi desabilitada.',
-                'auth/invalid-credential': 'Credenciais inválidas.',
-                'auth/missing-password': 'Password é obrigatório.'
-            };
-
-            return errorMessages[errorCode] || 'Erro desconhecido. Tente novamente.';
+            return utils.getErrorMessage(errorCode);
         }
 
-        // Validação de formulários
+        // Validação de formulários usando utils
         function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
+            return utils.validateEmail(email);
         }
 
         function validatePhone(phone) {
-            const re = /^[\d\s\-\(\)\+]+$/;
-            return re.test(phone) && phone.length >= 10;
+            return utils.validatePhone(phone);
         }
 
-        // Formatação de valores
+        // Formatação de valores usando utils
         function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(value);
+            return utils.formatCurrency(value);
         }
 
         function formatNumber(value) {
-            return new Intl.NumberFormat('pt-BR').format(value);
+            return utils.formatNumber(value);
         }
 
         // Smooth scroll para navegação
@@ -894,16 +923,9 @@
             });
         });
 
-        // Máscara para telefone
+        // Máscara para telefone usando utils
         document.getElementById('registerPhone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length <= 11) {
-                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-                if (value.length < 14) {
-                    value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
-                }
-                e.target.value = value;
-            }
+            e.target.value = utils.phoneMask(e.target.value);
         });
 
         // Máscara para preço
@@ -934,16 +956,22 @@
         });
 
         // Inicialização
-        console.log('Connect Corretores inicializado!');
-        console.log('Firebase conectado:', app ? 'Sim' : 'Não');
+        utils.log('Connect Corretores inicializado!');
+        utils.log('Firebase conectado: ' + (app ? 'Sim' : 'Não'));
 
         // Verificar se o Firebase está funcionando
         try {
-            console.log('Auth:', auth ? 'Conectado' : 'Erro');
-            console.log('Firestore:', db ? 'Conectado' : 'Erro');
-            console.log('Storage:', storage ? 'Conectado' : 'Erro');
+            utils.log('Auth: ' + (auth ? 'Conectado' : 'Erro'));
+            utils.log('Firestore: ' + (db ? 'Conectado' : 'Erro'));
+            utils.log('Storage: ' + (storage ? 'Conectado' : 'Erro'));
+            
+            // Track app initialization
+            utils.trackEvent('app_initialized', {
+                version: appConfig.version,
+                environment: appConfig.environment
+            });
         } catch (error) {
-            console.error('Erro na inicialização do Firebase:', error);
+            utils.log('Erro na inicialização do Firebase: ' + error, 'error');
         }
 
     </script>
