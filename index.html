@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImobConnect - Sistema para Corretores de Imóveis</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    <!-- Overlay de carregamento -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header id="main-header">
+        <div class="container">
+            <div class="logo-container">
+                <img id="logo-img" src="assets/images/default-logo.png" alt="Logo ImobConnect">
+                <h1 id="brand-name">ImobConnect</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link" data-page="home">Início</a></li>
+                    <li><a href="#" class="nav-link" data-page="properties">Imóveis</a></li>
+                    <li><a href="#" class="nav-link" data-page="submit-property">Anunciar Imóvel</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth-container">
+                <button id="login-btn" class="btn btn-outline">Entrar</button>
+                <button id="register-btn" class="btn btn-primary">Cadastrar</button>
+                <div id="user-profile" class="hidden">
+                    <img id="user-avatar" src="assets/images/default-avatar.png" alt="Avatar">
+                    <div class="dropdown">
+                        <span id="user-name">Usuário</span>
+                        <i class="fas fa-chevron-down"></i>
+                        <div class="dropdown-content">
+                            <a href="#" data-page="dashboard">Painel</a>
+                            <a href="#" data-page="profile">Perfil</a>
+                            <a href="#" id="logout-btn">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="theme-toggle" class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="mobile-menu-btn" class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div id="mobile-menu" class="hidden">
+        <ul class="mobile-nav-links">
+            <li><a href="#" class="nav-link" data-page="home">Início</a></li>
+            <li><a href="#" class="nav-link" data-page="properties">Imóveis</a></li>
+            <li><a href="#" class="nav-link" data-page="submit-property">Anunciar Imóvel</a></li>
+            <li><a href="#" class="nav-link" data-page="about">Sobre</a></li>
+            <li class="auth-links">
+                <a href="#" id="mobile-login-btn">Entrar</a>
+                <a href="#" id="mobile-register-btn">Cadastrar</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <main id="main-content">
+        <!-- Página inicial -->
+        <section id="home-page" class="page active">
+            <div class="hero">
+                <div class="container">
+                    <h2>Encontre o imóvel dos seus sonhos</h2>
+                    <p>Plataforma completa para corretores e proprietários de imóveis</p>
+                    <div class="search-container">
+                        <div class="search-tabs">
+                            <button class="search-tab active" data-type="buy">Comprar</button>
+                            <button class="search-tab" data-type="rent">Alugar</button>
+                        </div>
+                        <div class="search-form">
+                            <div class="search-input">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Cidade, bairro ou endereço">
+                            </div>
+                            <div class="search-filters">
+                                <select id="property-type">
+                                    <option value="">Tipo de imóvel</option>
+                                    <option value="apartment">Apartamento</option>
+                                    <option value="house">Casa</option>
+                                    <option value="commercial">Comercial</option>
+                                    <option value="land">Terreno</option>
+                                </select>
+                                <select id="price-range">
+                                    <option value="">Faixa de preço</option>
+                                    <option value="0-200000">Até R$ 200.000</option>
+                                    <option value="200000-500000">R$ 200.000 - R$ 500.000</option>
+                                    <option value="500000-1000000">R$ 500.000 - R$ 1.000.000</option>
+                                    <option value="1000000+">Acima de R$ 1.000.000</option>
+                                </select>
+                                <button class="btn btn-primary search-btn">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featured-properties">
+                <div class="container">
+                    <h3>Imóveis em destaque</h3>
+                    <div class="property-carousel">
+                        <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
+                        <div class="property-cards">
+                            <!-- Cards serão inseridos dinamicamente via JavaScript -->
+                            <div class="property-card skeleton"></div>
+                            <div class="property-card skeleton"></div>
+                            <div class="property-card skeleton"></div>
+                        </div>
+                        <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="container">
+                    <h3>Por que usar nossa plataforma?</h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-user-tie"></i>
+                            <h4>Perfil personalizado</h4>
+                            <p>Crie seu perfil de corretor com sua identidade visual e link personalizado.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-home"></i>
+                            <h4>Gerenciamento de imóveis</h4>
+                            <p>Cadastre e gerencie seus imóveis com facilidade através do painel administrativo.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-camera"></i>
+                            <h4>Galeria de imagens</h4>
+                            <p>Faça upload de múltiplas imagens para cada imóvel e crie galerias atrativas.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4>Responsivo</h4>
+                            <p>Acesse de qualquer dispositivo - desktop, tablet ou smartphone.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="container">
+                    <h3>Comece a usar agora mesmo!</h3>
+                    <p>Cadastre-se gratuitamente e tenha acesso a todas as funcionalidades.</p>
+                    <button id="cta-register-btn" class="btn btn-primary">Criar minha conta</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página de listagem de imóveis -->
+        <section id="properties-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Imóveis disponíveis</h2>
+                    <div class="filter-container">
+                        <button id="filter-toggle" class="btn btn-outline">
+                            <i class="fas fa-filter"></i> Filtros
+                        </button>
+                        <select id="sort-select">
+                            <option value="recent">Mais recentes</option>
+                            <option value="price-asc">Menor preço</option>
+                            <option value="price-desc">Maior preço</option>
+                            <option value="area-asc">Menor área</option>
+                            <option value="area-desc">Maior área</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="properties-container">
+                    <div id="filters-sidebar" class="filters-sidebar">
+                        <h3>Filtros</h3>
+                        <div class="filter-group">
+                            <label>Tipo de negócio</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="deal-type" value="sale"> Venda</label>
+                                <label><input type="checkbox" name="deal-type" value="rent"> Aluguel</label>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Tipo de imóvel</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="property-type" value="apartment"> Apartamento</label>
+                                <label><input type="checkbox" name="property-type" value="house"> Casa</label>
+                                <label><input type="checkbox" name="property-type" value="commercial"> Comercial</label>
+                                <label><input type="checkbox" name="property-type" value="land"> Terreno</label>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Preço</label>
+                            <div class="range-slider">
+                                <input type="range" id="price-min" min="0" max="5000000" step="50000" value="0">
+                                <input type="range" id="price-max" min="0" max="5000000" step="50000" value="5000000">
+                                <div class="range-values">
+                                    <span id="price-min-value">R$ 0</span>
+                                    <span id="price-max-value">R$ 5.000.000</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Área (m²)</label>
+                            <div class="range-slider">
+                                <input type="range" id="area-min" min="0" max="1000" step="10" value="0">
+                                <input type="range" id="area-max" min="0" max="1000" step="10" value="1000">
+                                <div class="range-values">
+                                    <span id="area-min-value">0 m²</span>
+                                    <span id="area-max-value">1000 m²</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Quartos</label>
+                            <div class="button-group">
+                                <button class="btn-filter" data-value="1">1+</button>
+                                <button class="btn-filter" data-value="2">2+</button>
+                                <button class="btn-filter" data-value="3">3+</button>
+                                <button class="btn-filter" data-value="4">4+</button>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Banheiros</label>
+                            <div class="button-group">
+                                <button class="btn-filter" data-value="1">1+</button>
+                                <button class="btn-filter" data-value="2">2+</button>
+                                <button class="btn-filter" data-value="3">3+</button>
+                                <button class="btn-filter" data-value="4">4+</button>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Vagas de garagem</label>
+                            <div class="button-group">
+                                <button class="btn-filter" data-value="1">1+</button>
+                                <button class="btn-filter" data-value="2">2+</button>
+                                <button class="btn-filter" data-value="3">3+</button>
+                                <button class="btn-filter" data-value="4">4+</button>
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button id="apply-filters" class="btn btn-primary">Aplicar filtros</button>
+                            <button id="clear-filters" class="btn btn-outline">Limpar filtros</button>
+                        </div>
+                    </div>
+
+                    <div class="properties-grid">
+                        <!-- Cards serão inseridos dinamicamente via JavaScript -->
+                        <div class="property-card skeleton"></div>
+                        <div class="property-card skeleton"></div>
+                        <div class="property-card skeleton"></div>
+                        <div class="property-card skeleton"></div>
+                        <div class="property-card skeleton"></div>
+                        <div class="property-card skeleton"></div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <button class="pagination-btn prev disabled"><i class="fas fa-chevron-left"></i></button>
+                    <div class="pagination-numbers">
+                        <button class="pagination-number active">1</button>
+                        <button class="pagination-number">2</button>
+                        <button class="pagination-number">3</button>
+                    </div>
+                    <button class="pagination-btn next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página de detalhes do imóvel -->
+        <section id="property-details-page" class="page">
+            <div class="container">
+                <div class="property-details-container">
+                    <!-- Conteúdo será inserido dinamicamente via JavaScript -->
+                    <div class="property-details-skeleton">
+                        <div class="gallery-skeleton"></div>
+                        <div class="info-skeleton">
+                            <div class="title-skeleton"></div>
+                            <div class="price-skeleton"></div>
+                            <div class="features-skeleton"></div>
+                            <div class="description-skeleton"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página de envio de imóvel por proprietário -->
+        <section id="submit-property-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Anunciar meu imóvel</h2>
+                    <p>Preencha o formulário abaixo para enviar seu imóvel para análise.</p>
+                </div>
+
+                <div class="submit-property-form">
+                    <form id="property-submission-form">
+                        <div class="form-section">
+                            <h3>Informações básicas</h3>
+                            <div class="form-group">
+                                <label for="property-title">Título do anúncio*</label>
+                                <input type="text" id="property-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-description">Descrição detalhada*</label>
+                                <textarea id="property-description" rows="5" required></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="property-type-select">Tipo de imóvel*</label>
+                                    <select id="property-type-select" required>
+                                        <option value="">Selecione</option>
+                                        <option value="apartment">Apartamento</option>
+                                        <option value="house">Casa</option>
+                                        <option value="commercial">Comercial</option>
+                                        <option value="land">Terreno</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="deal-type">Tipo de negócio*</label>
+                                    <select id="deal-type" required>
+                                        <option value="">Selecione</option>
+                                        <option value="sale">Venda</option>
+                                        <option value="rent">Aluguel</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="property-price">Preço (R$)*</label>
+                                    <input type="number" id="property-price" min="0" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="property-area">Área (m²)*</label>
+                                    <input type="number" id="property-area" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Características</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="property-bedrooms">Quartos</label>
+                                    <input type="number" id="property-bedrooms" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="property-bathrooms">Banheiros</label>
+                                    <input type="number" id="property-bathrooms" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="property-garage">Vagas de garagem</label>
+                                    <input type="number" id="property-garage" min="0" value="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Comodidades</label>
+                                <div class="checkbox-grid">
+                                    <label><input type="checkbox" name="amenities" value="pool"> Piscina</label>
+                                    <label><input type="checkbox" name="amenities" value="gym"> Academia</label>
+                                    <label><input type="checkbox" name="amenities" value="garden"> Jardim</label>
+                                    <label><input type="checkbox" name="amenities" value="barbecue"> Churrasqueira</label>
+                                    <label><input type="checkbox" name="amenities" value="security"> Segurança 24h</label>
+                                    <label><input type="checkbox" name="amenities" value="elevator"> Elevador</label>
+                                    <label><input type="checkbox" name="amenities" value="furnished"> Mobiliado</label>
+                                    <label><input type="checkbox" name="amenities" value="pet"> Aceita pet</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Localização</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="property-city">Cidade*</label>
+                                    <input type="text" id="property-city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="property-neighborhood">Bairro*</label>
+                                    <input type="text" id="property-neighborhood" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-address">Endereço completo</label>
+                                <input type="text" id="property-address" placeholder="Opcional - será visível apenas para o corretor">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Imagens</h3>
+                            <div class="form-group">
+                                <label for="property-images">Fotos do imóvel*</label>
+                                <div class="image-upload-container">
+                                    <div class="image-upload-area">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Arraste e solte as imagens aqui ou clique para selecionar</p>
+                                        <input type="file" id="property-images" multiple accept="image/*" required>
+                                    </div>
+                                    <div class="image-preview-container">
+                                        <!-- Previews serão inseridos dinamicamente via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Informações de contato</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="owner-name">Nome completo*</label>
+                                    <input type="text" id="owner-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="owner-email">E-mail*</label>
+                                    <input type="email" id="owner-email" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="owner-phone">Telefone*</label>
+                                    <input type="tel" id="owner-phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="owner-whatsapp">WhatsApp</label>
+                                    <input type="tel" id="owner-whatsapp" placeholder="Opcional">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="broker-select">Corretor (opcional)</label>
+                                <select id="broker-select">
+                                    <option value="">Selecione um corretor</option>
+                                    <!-- Opções serão inseridas dinamicamente via JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Enviar imóvel</button>
+                            <button type="reset" class="btn btn-outline">Limpar formulário</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página sobre -->
+        <section id="about-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Sobre a plataforma</h2>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-section">
+                        <h3>Quem somos</h3>
+                        <p>A ImobConnect é uma plataforma inovadora desenvolvida para facilitar o trabalho de corretores de imóveis e proprietários. Nosso objetivo é conectar pessoas e imóveis de forma eficiente e transparente.</p>
+                        <p>Com nossa plataforma, corretores podem criar seu próprio espaço personalizado, com identidade visual própria e gerenciamento completo de imóveis.</p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>Nossa missão</h3>
+                        <p>Transformar a experiência de compra, venda e aluguel de imóveis, tornando o processo mais simples, transparente e eficiente para todas as partes envolvidas.</p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>Recursos da plataforma</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <i class="fas fa-user-tie"></i>
+                                <h4>Perfil personalizado</h4>
+                                <p>Crie seu perfil de corretor com sua identidade visual e link personalizado.</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-home"></i>
+                                <h4>Gerenciamento de imóveis</h4>
+                                <p>Cadastre e gerencie seus imóveis com facilidade através do painel administrativo.</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-camera"></i>
+                                <h4>Galeria de imagens</h4>
+                                <p>Faça upload de múltiplas imagens para cada imóvel e crie galerias atrativas.</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-mobile-alt"></i>
+                                <h4>Responsivo</h4>
+                                <p>Acesse de qualquer dispositivo - desktop, tablet ou smartphone.</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-palette"></i>
+                                <h4>Personalização visual</h4>
+                                <p>Escolha cores, logotipo e estilo visual que representem sua marca.</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-link"></i>
+                                <h4>Link personalizado</h4>
+                                <p>Tenha um endereço único para compartilhar com seus clientes.</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>Estatísticas</h4>
+                                <p>Acompanhe o desempenho dos seus anúncios com métricas detalhadas.</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-bell"></i>
+                                <h4>Notificações</h4>
+                                <p>Receba alertas sobre novos contatos e interesses nos seus imóveis.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>Entre em contato</h3>
+                        <p>Tem dúvidas ou sugestões? Entre em contato conosco:</p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>contato@imobconnect.com.br</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(11) 99999-9999</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>(11) 99999-9999</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página de login -->
+        <section id="login-page" class="page">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2>Entrar</h2>
+                            <p>Acesse sua conta para gerenciar seus imóveis</p>
+                        </div>
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label for="login-email">E-mail</label>
+                                <input type="email" id="login-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Senha</label>
+                                <div class="password-input">
+                                    <input type="password" id="login-password" required>
+                                    <button type="button" class="toggle-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="remember-forgot">
+                                    <label>
+                                        <input type="checkbox" id="remember-me">
+                                        <span>Lembrar-me</span>
+                                    </label>
+                                    <a href="#" id="forgot-password-link">Esqueceu a senha?</a>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                            </div>
+                        </form>
+                        <div class="auth-divider">
+                            <span>ou</span>
+                        </div>
+                        <div class="social-login">
+                            <button class="btn btn-google">
+                                <i class="fab fa-google"></i>
+                                <span>Entrar com Google</span>
+                            </button>
+                        </div>
+                        <div class="auth-footer">
+                            <p>Não tem uma conta? <a href="#" id="go-to-register">Cadastre-se</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página de cadastro -->
+        <section id="register-page" class="page">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2>Criar conta</h2>
+                            <p>Cadastre-se para começar a anunciar seus imóveis</p>
+                        </div>
+                        <form id="register-form">
+                            <div class="form-group">
+                                <label for="register-name">Nome completo</label>
+                                <input type="text" id="register-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-email">E-mail</label>
+                                <input type="email" id="register-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-phone">Telefone</label>
+                                <input type="tel" id="register-phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password">Senha</label>
+                                <div class="password-input">
+                                    <input type="password" id="register-password" required>
+                                    <button type="button" class="toggle-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-confirm-password">Confirmar senha</label>
+                                <div class="password-input">
+                                    <input type="password" id="register-confirm-password" required>
+                                    <button type="button" class="toggle-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="terms-agree" required>
+                                    <span>Concordo com os <a href="#" id="terms-link">Termos de Uso</a> e <a href="#" id="privacy-link">Política de Privacidade</a></span>
+                                </label>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-block">Criar conta</button>
+                            </div>
+                        </form>
+                        <div class="auth-divider">
+                            <span>ou</span>
+                        </div>
+                        <div class="social-login">
+                            <button class="btn btn-google">
+                                <i class="fab fa-google"></i>
+                                <span>Cadastrar com Google</span>
+                            </button>
+                        </div>
+                        <div class="auth-footer">
+                            <p>Já tem uma conta? <a href="#" id="go-to-login">Entrar</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página de recuperação de senha -->
+        <section id="forgot-password-page" class="page">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2>Recuperar senha</h2>
+                            <p>Informe seu e-mail para receber um link de recuperação</p>
+                        </div>
+                        <form id="forgot-password-form">
+                            <div class="form-group">
+                                <label for="forgot-email">E-mail</label>
+                                <input type="email" id="forgot-email" required>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-block">Enviar link</button>
+                                <button type="button" id="back-to-login" class="btn btn-outline btn-block">Voltar para login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página de painel administrativo -->
+        <section id="dashboard-page" class="page">
+            <div class="container">
+                <div class="dashboard-container">
+                    <div class="dashboard-sidebar">
+                        <div class="user-info">
+                            <img id="dashboard-user-avatar" src="assets/images/default-avatar.png" alt="Avatar">
+                            <div class="user-details">
+                                <h3 id="dashboard-user-name">Nome do Usuário</h3>
+                                <p id="dashboard-user-email">usuario@email.com</p>
+                            </div>
+                        </div>
+                        <nav class="dashboard-nav">
+                            <ul>
+                                <li><a href="#" class="dashboard-nav-link active" data-section="dashboard-overview"><i class="fas fa-tachometer-alt"></i> Visão geral</a></li>
+                                <li><a href="#" class="dashboard-nav-link" data-section="dashboard-properties"><i class="fas fa-home"></i> Meus imóveis</a></li>
+                                <li><a href="#" class="dashboard-nav-link" data-section="dashboard-pending"><i class="fas fa-clock"></i> Imóveis pendentes</a></li>
+                                <li><a href="#" class="dashboard-nav-link" data-section="dashboard-messages"><i class="fas fa-envelope"></i> Mensagens</a></li>
+                                <li><a href="#" class="dashboard-nav-link" data-section="dashboard-profile"><i class="fas fa-user-cog"></i> Perfil</a></li>
+                                <li><a href="#" class="dashboard-nav-link" data-section="dashboard-appearance"><i class="fas fa-palette"></i> Aparência</a></li>
+                                <li><a href="#" class="dashboard-nav-link" data-section="dashboard-settings"><i class="fas fa-cog"></i> Configurações</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="dashboard-content">
+                        <!-- Visão geral -->
+                        <div id="dashboard-overview" class="dashboard-section active">
+                            <h2>Visão geral</h2>
+                            <div class="stats-cards">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-properties">0</h3>
+                                        <p>Imóveis publicados</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-views">0</h3>
+                                        <p>Visualizações</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="pending-properties">0</h3>
+                                        <p>Imóveis pendentes</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-messages">0</h3>
+                                        <p>Mensagens</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-row">
+                                <div class="dashboard-card">
+                                    <h3>Atividade recente</h3>
+                                    <div class="activity-list">
+                                        <!-- Atividades serão inseridas dinamicamente via JavaScript -->
+                                        <div class="activity-item skeleton"></div>
+                                        <div class="activity-item skeleton"></div>
+                                        <div class="activity-item skeleton"></div>
+                                    </div>
+                                </div>
+                                <div class="dashboard-card">
+                                    <h3>Desempenho dos imóveis</h3>
+                                    <div class="chart-container">
+                                        <canvas id="properties-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-row">
+                                <div class="dashboard-card">
+                                    <h3>Imóveis mais visualizados</h3>
+                                    <div class="top-properties">
+                                        <!-- Imóveis serão inseridos dinamicamente via JavaScript -->
+                                        <div class="top-property-item skeleton"></div>
+                                        <div class="top-property-item skeleton"></div>
+                                        <div class="top-property-item skeleton"></div>
+                                    </div>
+                                </div>
+                                <div class="dashboard-card">
+                                    <h3>Link personalizado</h3>
+                                    <div class="custom-link-container">
+                                        <p>Compartilhe seu link personalizado com clientes:</p>
+                                        <div class="custom-link">
+                                            <input type="text" id="custom-link" value="https://imobconnect.com.br/corretor/seu-nome" readonly>
+                                            <button id="copy-link" class="btn btn-outline">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                        <div class="qr-code-container">
+                                            <img id="qr-code" src="assets/images/qr-code-placeholder.png" alt="QR Code">
+                                            <button id="download-qr" class="btn btn-outline">
+                                                <i class="fas fa-download"></i> Baixar QR Code
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meus imóveis -->
+                        <div id="dashboard-properties" class="dashboard-section">
+                            <div class="section-header">
+                                <h2>Meus imóveis</h2>
+                                <button id="add-property-btn" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Adicionar imóvel
+                                </button>
+                            </div>
+
+                            <div class="properties-filter">
+                                <div class="search-input">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="search-properties" placeholder="Buscar imóveis...">
+                                </div>
+                                <div class="filter-options">
+                                    <select id="property-status-filter">
+                                        <option value="all">Todos os status</option>
+                                        <option value="active">Ativos</option>
+                                        <option value="inactive">Inativos</option>
+                                        <option value="sold">Vendidos</option>
+                                        <option value="rented">Alugados</option>
+                                    </select>
+                                    <select id="property-type-filter">
+                                        <option value="all">Todos os tipos</option>
+                                        <option value="apartment">Apartamentos</option>
+                                        <option value="house">Casas</option>
+                                        <option value="commercial">Comerciais</option>
+                                        <option value="land">Terrenos</option>
+                                    </select>
+                                    <select id="property-sort">
+                                        <option value="recent">Mais recentes</option>
+                                        <option value="oldest">Mais antigos</option>
+                                        <option value="price-asc">Menor preço</option>
+                                        <option value="price-desc">Maior preço</option>
+                                        <option value="views-desc">Mais visualizados</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="properties-table-container">
+                                <table class="properties-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Imóvel</th>
+                                            <th>Tipo</th>
+                                            <th>Preço</th>
+                                            <th>Status</th>
+                                            <th>Visualizações</th>
+                                            <th>Data</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="properties-table-body">
+                                        <!-- Imóveis serão inseridos dinamicamente via JavaScript -->
+                                        <tr class="skeleton-row">
+                                            <td colspan="7">
+                                                <div class="skeleton-table-row"></div>
+                                            </td>
+                                        </tr>
+                                        <tr class="skeleton-row">
+                                            <td colspan="7">
+                                                <div class="skeleton-table-row"></div>
+                                            </td>
+                                        </tr>
+                                        <tr class="skeleton-row">
+                                            <td colspan="7">
+                                                <div class="skeleton-table-row"></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="pagination">
+                                <button class="pagination-btn prev disabled"><i class="fas fa-chevron-left"></i></button>
+                                <div class="pagination-numbers">
+                                    <button class="pagination-number active">1</button>
+                                    <button class="pagination-number">2</button>
+                                    <button class="pagination-number">3</button>
+                                </div>
+                                <button class="pagination-btn next"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Imóveis pendentes -->
+                        <div id="dashboard-pending" class="dashboard-section">
+                            <h2>Imóveis pendentes</h2>
+                            <p>Imóveis enviados por proprietários aguardando sua aprovação.</p>
+
+                            <div class="pending-properties-container">
+                                <!-- Imóveis pendentes serão inseridos dinamicamente via JavaScript -->
+                                <div class="pending-property-card skeleton"></div>
+                                <div class="pending-property-card skeleton"></div>
+                                <div class="pending-property-card skeleton"></div>
+                            </div>
+                        </div>
+
+                        <!-- Mensagens -->
+                        <div id="dashboard-messages" class="dashboard-section">
+                            <h2>Mensagens</h2>
+                            <div class="messages-container">
+                                <div class="messages-sidebar">
+                                    <div class="messages-search">
+                                        <input type="text" placeholder="Buscar mensagens...">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <div class="messages-list">
+                                        <!-- Mensagens serão inseridas dinamicamente via JavaScript -->
+                                        <div class="message-item skeleton"></div>
+                                        <div class="message-item skeleton"></div>
+                                        <div class="message-item skeleton"></div>
+                                    </div>
+                                </div>
+                                <div class="message-content">
+                                    <div class="message-header">
+                                        <div class="message-contact">
+                                            <img src="assets/images/default-avatar.png" alt="Avatar">
+                                            <div class="contact-info">
+                                                <h3>Nome do contato</h3>
+                                                <p>Interessado em: Nome do imóvel</p>
+                                            </div>
+                                        </div>
+                                        <div class="message-actions">
+                                            <button class="btn btn-outline">
+                                                <i class="fas fa-phone"></i>
+                                            </button>
+                                            <button class="btn btn-outline">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </button>
+                                            <button class="btn btn-outline">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="message-body">
+                                        <!-- Mensagens serão inseridas dinamicamente via JavaScript -->
+                                    </div>
+                                    <div class="message-input">
+                                        <textarea placeholder="Digite sua mensagem..."></textarea>
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Perfil -->
+                        <div id="dashboard-profile" class="dashboard-section">
+                            <h2>Perfil</h2>
+                            <div class="profile-container">
+                                <div class="profile-header">
+                                    <div class="profile-avatar">
+                                        <img id="profile-avatar-preview" src="assets/images/default-avatar.png" alt="Avatar">
+                                        <div class="avatar-upload">
+                                            <label for="avatar-upload">
+                                                <i class="fas fa-camera"></i>
+                                            </label>
+                                            <input type="file" id="avatar-upload" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="profile-info">
+                                        <h3>Informações pessoais</h3>
+                                        <p>Atualize suas informações pessoais e profissionais</p>
+                                    </div>
+                                </div>
+
+                                <form id="profile-form">
+                                    <div class="form-section">
+                                        <h3>Dados pessoais</h3>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-name">Nome completo</label>
+                                                <input type="text" id="profile-name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-email">E-mail</label>
+                                                <input type="email" id="profile-email" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-phone">Telefone</label>
+                                                <input type="tel" id="profile-phone" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-whatsapp">WhatsApp</label>
+                                                <input type="tel" id="profile-whatsapp">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-section">
+                                        <h3>Dados profissionais</h3>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-company">Nome da imobiliária/empresa</label>
+                                                <input type="text" id="profile-company">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-creci">CRECI</label>
+                                                <input type="text" id="profile-creci">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="profile-bio">Biografia</label>
+                                            <textarea id="profile-bio" rows="4" placeholder="Fale um pouco sobre você e sua experiência profissional..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-section">
+                                        <h3>Redes sociais</h3>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-website">Website</label>
+                                                <input type="url" id="profile-website" placeholder="https://seusite.com.br">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-instagram">Instagram</label>
+                                                <input type="text" id="profile-instagram" placeholder="@seuusuario">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-facebook">Facebook</label>
+                                                <input type="text" id="profile-facebook" placeholder="@seuusuario">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-linkedin">LinkedIn</label>
+                                                <input type="text" id="profile-linkedin" placeholder="@seuusuario">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-section">
+                                        <h3>Alterar senha</h3>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="profile-current-password">Senha atual</label>
+                                                <div class="password-input">
+                                                    <input type="password" id="profile-current-password">
+                                                    <button type="button" class="toggle-password">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="profile-new-password">Nova senha</label>
+                                                <div class="password-input">
+                                                    <input type="password" id="profile-new-password">
+                                                    <button type="button" class="toggle-password">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="profile-confirm-password">Confirmar nova senha</label>
+                                            <div class="password-input">
+                                                <input type="password" id="profile-confirm-password">
+                                                <button type="button" class="toggle-password">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                                        <button type="reset" class="btn btn-outline">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Aparência -->
+                        <div id="dashboard-appearance" class="dashboard-section">
+                            <h2>Aparência</h2>
+                            <p>Personalize a aparência da sua página de corretor.</p>
+
+                            <div class="appearance-container">
+                                <div class="form-section">
+                                    <h3>Logotipo</h3>
+                                    <div class="logo-upload-container">
+                                        <div class="logo-preview">
+                                            <img id="logo-preview" src="assets/images/default-logo.png" alt="Logo">
+                                        </div>
+                                        <div class="logo-upload-actions">
+                                            <p>Faça upload do seu logotipo. Recomendamos uma imagem de pelo menos 200x200 pixels.</p>
+                                            <div class="upload-buttons">
+                                                <label for="logo-upload" class="btn btn-outline">
+                                                    <i class="fas fa-upload"></i> Escolher arquivo
+                                                </label>
+                                                <input type="file" id="logo-upload" accept="image/*" hidden>
+                                                <button id="remove-logo" class="btn btn-outline">
+                                                    <i class="fas fa-trash"></i> Remover
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h3>Cores</h3>
+                                    <div class="colors-container">
+                                        <div class="color-picker">
+                                            <label for="primary-color">Cor primária</label>
+                                            <input type="color" id="primary-color" value="#4a6cf7">
+                                            <input type="text" id="primary-color-hex" value="#4a6cf7">
+                                        </div>
+                                        <div class="color-picker">
+                                            <label for="secondary-color">Cor secundária</label>
+                                            <input type="color" id="secondary-color" value="#f97316">
+                                            <input type="text" id="secondary-color-hex" value="#f97316">
+                                        </div>
+                                        <div class="color-picker">
+                                            <label for="text-color">Cor do texto</label>
+                                            <input type="color" id="text-color" value="#1e293b">
+                                            <input type="text" id="text-color-hex" value="#1e293b">
+                                        </div>
+                                    </div>
+                                    <div class="theme-preview">
+                                        <h4>Pré-visualização</h4>
+                                        <div class="theme-preview-container">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-content">
+                                                <div class="preview-card"></div>
+                                                <div class="preview-card"></div>
+                                                <div class="preview-card"></div>
+                                            </div>
+                                            <div class="preview-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h3>Link personalizado</h3>
+                                    <div class="form-group">
+                                        <label for="custom-url">URL personalizada</label>
+                                        <div class="custom-url-input">
+                                            <span>imobconnect.com.br/corretor/</span>
+                                            <input type="text" id="custom-url" placeholder="seu-nome">
+                                        </div>
+                                        <p class="form-hint">Use apenas letras minúsculas, números e hífens. Sem espaços ou caracteres especiais.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button id="save-appearance" class="btn btn-primary">Salvar alterações</button>
+                                    <button id="reset-appearance" class="btn btn-outline">Restaurar padrão</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configurações -->
+                        <div id="dashboard-settings" class="dashboard-section">
+                            <h2>Configurações</h2>
+                            <div class="settings-container">
+                                <div class="form-section">
+                                    <h3>Preferências gerais</h3>
+                                    <div class="form-group">
+                                        <label>Tema</label>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="theme-switch">
+                                            <label for="theme-switch">
+                                                <span class="toggle-icon">
+                                                    <i class="fas fa-sun"></i>
+                                                    <i class="fas fa-moon"></i>
+                                                </span>
+                                                <span class="toggle-text">Tema claro</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Idioma</label>
+                                        <select id="language-select">
+                                            <option value="pt-BR">Português (Brasil)</option>
+                                            <option value="en-US">English (US)</option>
+                                            <option value="es-ES">Español</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h3>Notificações</h3>
+                                    <div class="form-group">
+                                        <label>E-mail</label>
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" name="email-notifications" value="new-message" checked> Novas mensagens</label>
+                                            <label><input type="checkbox" name="email-notifications" value="new-property" checked> Novos imóveis pendentes</label>
+                                            <label><input type="checkbox" name="email-notifications" value="property-view" checked> Visualizações de imóveis</label>
+                                            <label><input type="checkbox" name="email-notifications" value="account" checked> Atualizações da conta</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Push</label>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="push-switch" checked>
+                                            <label for="push-switch">
+                                                <span class="toggle-text">Ativar notificações push</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h3>Privacidade</h3>
+                                    <div class="form-group">
+                                        <label>Visibilidade do perfil</label>
+                                        <select id="profile-visibility">
+                                            <option value="public">Público</option>
+                                            <option value="private">Privado</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Compartilhamento de dados</label>
+                                        <div class="checkbox-group">
+                                            <label><input type="checkbox" name="data-sharing" value="analytics" checked> Compartilhar dados para análise</label>
+                                            <label><input type="checkbox" name="data-sharing" value="marketing"> Receber ofertas e promoções</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section danger-zone">
+                                    <h3>Zona de perigo</h3>
+                                    <div class="danger-actions">
+                                        <div class="danger-action">
+                                            <div class="danger-info">
+                                                <h4>Excluir todos os imóveis</h4>
+                                                <p>Esta ação removerá permanentemente todos os seus imóveis cadastrados.</p>
+                                            </div>
+                                            <button id="delete-properties" class="btn btn-danger">Excluir imóveis</button>
+                                        </div>
+                                        <div class="danger-action">
+                                            <div class="danger-info">
+                                                <h4>Excluir conta</h4>
+                                                <p>Esta ação excluirá permanentemente sua conta e todos os dados associados.</p>
+                                            </div>
+                                            <button id="delete-account" class="btn btn-danger">Excluir conta</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button id="save-settings" class="btn btn-primary">Salvar configurações</button>
+                                    <button id="reset-settings" class="btn btn-outline">Restaurar padrão</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer id="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/default-logo.png" alt="Logo ImobConnect">
+                    <h2>ImobConnect</h2>
+                    <p>Plataforma para corretores de imóveis</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h3>Navegação</h3>
+                        <ul>
+                            <li><a href="#" data-page="home">Início</a></li>
+                            <li><a href="#" data-page="properties">Imóveis</a></li>
+                            <li><a href="#" data-page="submit-property">Anunciar Imóvel</a></li>
+                            <li><a href="#" data-page="about">Sobre</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Conta</h3>
+                        <ul>
+                            <li><a href="#" data-page="login">Entrar</a></li>
+                            <li><a href="#" data-page="register">Cadastrar</a></li>
+                            <li><a href="#" data-page="dashboard">Painel</a></li>
+                            <li><a href="#" data-page="profile">Perfil</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="#" data-page="terms">Termos de Uso</a></li>
+                            <li><a href="#" data-page="privacy">Política de Privacidade</a></li>
+                            <li><a href="#" data-page="cookies">Política de Cookies</a></li>
+                            <li><a href="#" data-page="gdpr">LGPD</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Receba novidades</h3>
+                    <p>Inscreva-se para receber atualizações e novidades.</p>
+                    <form id="newsletter-form">
+                        <div class="newsletter-input">
+                            <input type="email" placeholder="Seu e-mail" required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ImobConnect. Todos os direitos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" data-page="terms">Termos</a>
+                    <a href="#" data-page="privacy">Privacidade</a>
+                    <a href="#" data-page="contact">Contato</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modais -->
+    <!-- Modal de detalhes do imóvel -->
+    <div id="property-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalhes do imóvel</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo será inserido dinamicamente via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de adicionar/editar imóvel -->
+    <div id="add-property-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar imóvel</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-property-form">
+                    <!-- Conteúdo similar ao formulário de envio de imóvel -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirmação</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message">Tem certeza que deseja realizar esta ação?</p>
+                <div class="modal-actions">
+                    <button id="confirm-yes" class="btn btn-danger">Sim</button>
+                    <button id="confirm-no" class="btn btn-outline">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de alerta -->
+    <div id="alert-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Aviso</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="alert-message">Mensagem de alerta.</p>
+                <div class="modal-actions">
+                    <button id="alert-ok" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de notificação -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/properties.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

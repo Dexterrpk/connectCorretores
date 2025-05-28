@@ -1,0 +1,1699 @@
+/**
+ * ImobConnect - Sistema para Corretores de Imóveis
+ * Estilos para tema escuro/claro e efeitos visuais modernos
+ */
+
+/* Variáveis de tema claro (padrão) */
+:root {
+  /* Cores principais */
+  --primary-color: #4a6cf7;
+  --primary-dark: #3a5bd9;
+  --primary-light: #6b89f9;
+  --secondary-color: #f97316;
+  --secondary-dark: #e65e05;
+  --secondary-light: #fb8c3f;
+  
+  /* Tons de cinza */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  
+  /* Cores de estado */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  
+  /* Cores de fundo */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  
+  /* Cores de texto */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-light: #ffffff;
+  
+  /* Cores de borda */
+  --border-color: #e2e8f0;
+  --border-light: #f1f5f9;
+  --border-dark: #cbd5e1;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Espaçamentos */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* Raios de borda */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Z-index */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal: 40;
+  --z-popover: 50;
+  --z-tooltip: 60;
+}
+
+/* Variáveis de tema escuro */
+[data-theme="dark"] {
+  /* Cores principais (ajustadas para tema escuro) */
+  --primary-color: #5d7bf9;
+  --primary-dark: #4a6cf7;
+  --primary-light: #7b94fa;
+  --secondary-color: #fb8c3f;
+  --secondary-dark: #f97316;
+  --secondary-light: #fca05e;
+  
+  /* Tons de cinza (invertidos) */
+  --gray-50: #0f172a;
+  --gray-100: #1e293b;
+  --gray-200: #334155;
+  --gray-300: #475569;
+  --gray-400: #64748b;
+  --gray-500: #94a3b8;
+  --gray-600: #cbd5e1;
+  --gray-700: #e2e8f0;
+  --gray-800: #f1f5f9;
+  --gray-900: #f8fafc;
+  
+  /* Cores de fundo */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  
+  /* Cores de texto */
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-tertiary: #cbd5e1;
+  --text-light: #ffffff;
+  
+  /* Cores de borda */
+  --border-color: #334155;
+  --border-light: #1e293b;
+  --border-dark: #475569;
+  
+  /* Sombras (mais escuras) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Efeitos de hover e transições */
+.btn,
+.nav-link,
+.property-card,
+.dashboard-nav-link,
+.form-control,
+.gallery-thumb,
+.social-icon {
+  transition: var(--transition-normal);
+}
+
+/* Efeitos de hover para botões */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Efeitos de hover para cards de imóveis */
+.property-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Efeitos para imagens na galeria */
+.gallery-thumb {
+  transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.gallery-thumb:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.gallery-thumb.active {
+  border-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+/* Efeitos para links de navegação */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Efeitos para inputs */
+.form-control:focus {
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+  border-color: var(--primary-color);
+}
+
+/* Efeitos para botões de ação na tabela */
+.table-action-btn {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.table-action-btn:hover {
+  transform: scale(1.2);
+}
+
+.table-action-btn.edit:hover {
+  color: var(--primary-color);
+}
+
+.table-action-btn.delete:hover {
+  color: var(--error);
+}
+
+.table-action-btn.view:hover {
+  color: var(--info);
+}
+
+/* Efeitos para ícones sociais */
+.social-icon {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+}
+
+/* Animações para elementos ao carregar a página */
+.hero-content {
+  animation: fadeIn 1s ease-out, slideInUp 1s ease-out;
+}
+
+.hero-image {
+  animation: fadeIn 1.2s ease-out, slideInRight 1.2s ease-out;
+}
+
+.section-title {
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--primary-color);
+}
+
+/* Animação para o loading spinner */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Efeitos para o switch de tema */
+.theme-toggle {
+  transition: transform 0.5s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(30deg);
+}
+
+/* Efeitos para modais */
+.modal {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-content {
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Efeitos para toasts */
+.toast {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Efeitos para badges */
+.property-badge {
+  transition: transform 0.2s ease;
+}
+
+.property-badge:hover {
+  transform: scale(1.1);
+}
+
+/* Efeitos para o carrossel */
+.carousel-btn {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-btn:hover {
+  transform: scale(1.1);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para o menu mobile */
+.mobile-menu {
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Efeitos para o filtro de imóveis */
+.filters-sidebar {
+  transition: transform 0.3s ease;
+}
+
+/* Efeitos para o upload de imagens */
+.image-upload-area {
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.image-upload-area:hover,
+.image-upload-area.dragover {
+  border-color: var(--primary-color);
+  background-color: rgba(74, 108, 247, 0.05);
+}
+
+/* Efeitos para as prévias de imagem */
+.image-preview {
+  transition: transform 0.3s ease;
+}
+
+.image-preview:hover {
+  transform: scale(1.05);
+}
+
+.remove-image {
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.image-preview:hover .remove-image {
+  opacity: 1;
+}
+
+/* Efeitos para os inputs de cor */
+input[type="color"] {
+  transition: transform 0.3s ease;
+}
+
+input[type="color"]:hover {
+  transform: scale(1.1);
+}
+
+/* Efeitos para os cards de estatísticas no dashboard */
+.stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.2);
+}
+
+/* Efeitos para os links do dashboard */
+.dashboard-nav-link {
+  transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease;
+}
+
+.dashboard-nav-link:hover,
+.dashboard-nav-link.active {
+  border-left: 4px solid var(--primary-color);
+}
+
+/* Efeitos para os botões de paginação */
+.pagination-number {
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-number:hover {
+  transform: scale(1.1);
+}
+
+.pagination-number.active {
+  transform: scale(1.1);
+}
+
+/* Efeitos para os inputs de busca */
+.search-input {
+  transition: width 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+  width: 100%;
+}
+
+/* Efeitos para as abas de busca */
+.search-tab {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Efeitos para os botões de contato */
+.contact-buttons .btn {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-buttons .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.whatsapp-btn:hover {
+  background-color: #25d366;
+  border-color: #25d366;
+}
+
+.phone-btn:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Efeitos para o footer */
+.footer-social-link {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer-social-link:hover {
+  transform: translateY(-3px);
+  color: var(--primary-color);
+}
+
+/* Efeitos para o botão de voltar ao topo */
+.back-to-top {
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.back-to-top:hover {
+  transform: translateY(-5px);
+  background-color: var(--primary-dark);
+}
+
+/* Efeitos para os campos de formulário inválidos */
+.form-control.invalid {
+  border-color: var(--error);
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Efeitos para os skeletons de carregamento */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Efeitos para o QR code */
+.qr-code-container {
+  transition: transform 0.3s ease;
+}
+
+.qr-code-container:hover {
+  transform: scale(1.05);
+}
+
+/* Efeitos para os switches */
+.switch-input:checked + .switch-slider {
+  background-color: var(--primary-color);
+}
+
+.switch-slider {
+  transition: background-color 0.3s ease;
+}
+
+.switch-slider:before {
+  transition: transform 0.3s ease;
+}
+
+/* Efeitos para os botões de redes sociais */
+.social-button.facebook:hover {
+  background-color: #1877f2;
+  border-color: #1877f2;
+}
+
+.social-button.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: #cc2366;
+}
+
+.social-button.linkedin:hover {
+  background-color: #0077b5;
+  border-color: #0077b5;
+}
+
+/* Efeitos para os botões de compartilhamento */
+.share-button {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.share-button:hover {
+  transform: translateY(-3px);
+}
+
+/* Efeitos para os botões de favoritos */
+.favorite-button {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.favorite-button:hover {
+  transform: scale(1.2);
+  color: #ef4444;
+}
+
+.favorite-button.active {
+  color: #ef4444;
+}
+
+/* Efeitos para os botões de toggle de senha */
+.toggle-password {
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de filtro */
+.filter-toggle {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.filter-toggle:hover {
+  transform: rotate(90deg);
+}
+
+/* Efeitos para os checkboxes personalizados */
+.custom-checkbox {
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.custom-checkbox:checked {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para os radio buttons personalizados */
+.custom-radio {
+  transition: border-color 0.3s ease;
+}
+
+.custom-radio:checked:after {
+  transform: scale(1);
+}
+
+/* Efeitos para os selects personalizados */
+.custom-select {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+}
+
+/* Efeitos para os tooltips */
+.tooltip {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tooltip:hover {
+  opacity: 1;
+  transform: translateY(-5px);
+}
+
+/* Efeitos para os badges de notificação */
+.notification-badge {
+  transition: transform 0.3s ease;
+}
+
+.notification-badge:hover {
+  transform: scale(1.2);
+}
+
+/* Efeitos para os botões de ordenação */
+.sort-button {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.sort-button:hover {
+  transform: translateY(-2px);
+  color: var(--primary-color);
+}
+
+.sort-button.active {
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de navegação da galeria */
+.gallery-nav-button {
+  transition: opacity 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+}
+
+.gallery-nav-button:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Efeitos para os cards de depoimentos */
+.testimonial-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Efeitos para os avatares */
+.avatar {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.1);
+  border-color: var(--primary-color);
+}
+
+/* Efeitos para os botões de mídia social no footer */
+.footer-social-icon {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.footer-social-icon:hover {
+  transform: translateY(-3px);
+}
+
+/* Efeitos para os links do footer */
+.footer-link {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+/* Efeitos para os botões de expansão */
+.expand-button {
+  transition: transform 0.3s ease;
+}
+
+.expand-button.expanded {
+  transform: rotate(180deg);
+}
+
+/* Efeitos para os acordeões */
+.accordion-header {
+  transition: background-color 0.3s ease;
+}
+
+.accordion-content {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Efeitos para os botões de navegação do carrossel */
+.carousel-dot {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.carousel-dot.active {
+  transform: scale(1.5);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para os cards de recursos */
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.feature-icon {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.2);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de CTA */
+.cta-button {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Efeitos para os cards de planos */
+.plan-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-xl);
+}
+
+.plan-card.featured {
+  transform: scale(1.05);
+}
+
+.plan-card.featured:hover {
+  transform: scale(1.05) translateY(-10px);
+}
+
+/* Efeitos para os botões de navegação entre páginas */
+.page-nav-button {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.page-nav-button:hover {
+  transform: translateX(0);
+}
+
+.page-nav-button.prev:hover {
+  transform: translateX(-5px);
+}
+
+.page-nav-button.next:hover {
+  transform: translateX(5px);
+}
+
+/* Efeitos para os campos de busca */
+.search-form {
+  transition: box-shadow 0.3s ease;
+}
+
+.search-form:focus-within {
+  box-shadow: var(--shadow-md);
+}
+
+/* Efeitos para os botões de filtro */
+.filter-button {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.filter-button.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* Efeitos para os botões de ordenação */
+.sort-select {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sort-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+}
+
+/* Efeitos para os botões de ação em massa */
+.bulk-action-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.bulk-action-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exportação */
+.export-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.export-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de impressão */
+.print-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.print-button:hover {
+  transform: translateY(-2px);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de compartilhamento */
+.share-dropdown {
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Efeitos para os botões de mídia social */
+.social-share-button {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.social-share-button:hover {
+  transform: translateY(-3px);
+}
+
+/* Efeitos para os botões de favoritos */
+.favorite-toggle {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.favorite-toggle:hover {
+  transform: scale(1.2);
+}
+
+.favorite-toggle.active {
+  color: #ef4444;
+}
+
+/* Efeitos para os botões de comparação */
+.compare-toggle {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.compare-toggle:hover {
+  transform: scale(1.1);
+}
+
+.compare-toggle.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Efeitos para os botões de visualização (grade/lista) */
+.view-toggle-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.view-toggle-button:hover {
+  transform: scale(1.2);
+}
+
+.view-toggle-button.active {
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de navegação do mapa */
+.map-nav-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.map-nav-button:hover {
+  transform: scale(1.1);
+}
+
+/* Efeitos para os marcadores do mapa */
+.map-marker {
+  transition: transform 0.3s ease;
+}
+
+.map-marker:hover {
+  transform: scale(1.2);
+}
+
+/* Efeitos para os popups do mapa */
+.map-popup {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Efeitos para os botões de zoom do mapa */
+.map-zoom-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.map-zoom-button:hover {
+  transform: scale(1.1);
+}
+
+/* Efeitos para os botões de filtro do mapa */
+.map-filter-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.map-filter-button:hover {
+  transform: translateY(-2px);
+}
+
+.map-filter-button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Efeitos para os botões de localização */
+.location-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.location-button:hover {
+  transform: scale(1.1);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para os botões de direção */
+.directions-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.directions-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para os botões de street view */
+.street-view-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.street-view-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para os botões de fullscreen */
+.fullscreen-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.fullscreen-button:hover {
+  transform: scale(1.1);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para os botões de reset */
+.reset-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de ajuda */
+.help-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.help-button:hover {
+  transform: rotate(15deg);
+}
+
+/* Efeitos para os tooltips de ajuda */
+.help-tooltip {
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Efeitos para os botões de notificação */
+.notification-button {
+  transition: transform 0.3s ease;
+}
+
+.notification-button:hover {
+  transform: scale(1.1);
+}
+
+/* Efeitos para os dropdowns de notificação */
+.notification-dropdown {
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Efeitos para os itens de notificação */
+.notification-item {
+  transition: background-color 0.3s ease;
+}
+
+.notification-item:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* Efeitos para os botões de marcar como lido */
+.mark-read-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.mark-read-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de limpar notificações */
+.clear-notifications-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.clear-notifications-button:hover {
+  transform: translateY(-2px);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de configurações */
+.settings-button {
+  transition: transform 0.3s ease;
+}
+
+.settings-button:hover {
+  transform: rotate(90deg);
+}
+
+/* Efeitos para os dropdowns de configurações */
+.settings-dropdown {
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Efeitos para os itens de configurações */
+.settings-item {
+  transition: background-color 0.3s ease;
+}
+
+.settings-item:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* Efeitos para os botões de perfil */
+.profile-button {
+  transition: transform 0.3s ease;
+}
+
+.profile-button:hover {
+  transform: scale(1.1);
+}
+
+/* Efeitos para os dropdowns de perfil */
+.profile-dropdown {
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Efeitos para os itens de perfil */
+.profile-item {
+  transition: background-color 0.3s ease;
+}
+
+.profile-item:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* Efeitos para os botões de logout */
+.logout-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.logout-button:hover {
+  transform: translateX(5px);
+  color: var(--error);
+}
+
+/* Efeitos para os botões de edição de perfil */
+.edit-profile-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-profile-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de upload de avatar */
+.avatar-upload-button {
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.avatar-container:hover .avatar-upload-button {
+  opacity: 1;
+}
+
+/* Efeitos para os botões de upload de logo */
+.logo-upload-button {
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.logo-container:hover .logo-upload-button {
+  opacity: 1;
+}
+
+/* Efeitos para os botões de remoção de logo */
+.remove-logo-button {
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.logo-container:hover .remove-logo-button {
+  opacity: 1;
+}
+
+/* Efeitos para os botões de download de QR code */
+.download-qr-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.download-qr-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de copiar link */
+.copy-link-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.copy-link-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de salvar configurações */
+.save-settings-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.save-settings-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de restaurar configurações */
+.reset-settings-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.reset-settings-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de conta */
+.delete-account-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-account-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de imóveis */
+.delete-properties-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-properties-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de aprovação de imóveis */
+.approve-property-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.approve-property-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--success);
+}
+
+/* Efeitos para os botões de rejeição de imóveis */
+.reject-property-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.reject-property-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--error);
+}
+
+/* Efeitos para os botões de edição de imóveis */
+.edit-property-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-property-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de adição de imóveis */
+.add-property-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-property-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de destaque de imóveis */
+.feature-property-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.feature-property-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--secondary-color);
+}
+
+/* Efeitos para os botões de status de imóveis */
+.status-toggle-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.status-toggle-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de visualização de imóveis */
+.view-property-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-property-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de envio de mensagem */
+.send-message-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.send-message-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de resposta de mensagem */
+.reply-message-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.reply-message-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de mensagem */
+.delete-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-message-button:hover {
+  transform: scale(1.1);
+  color: var(--error);
+}
+
+/* Efeitos para os botões de arquivamento de mensagem */
+.archive-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.archive-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de marcação de mensagem */
+.mark-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.mark-message-button:hover {
+  transform: scale(1.1);
+  color: var(--warning);
+}
+
+/* Efeitos para os botões de filtro de mensagem */
+.filter-message-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.filter-message-button:hover {
+  transform: translateY(-2px);
+}
+
+.filter-message-button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Efeitos para os botões de busca de mensagem */
+.search-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.search-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de ordenação de mensagem */
+.sort-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.sort-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de exportação de mensagem */
+.export-message-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.export-message-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de impressão de mensagem */
+.print-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.print-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de compartilhamento de mensagem */
+.share-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.share-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de encaminhamento de mensagem */
+.forward-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.forward-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de resposta de mensagem */
+.reply-all-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.reply-all-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de anexo de mensagem */
+.attach-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.attach-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de emoji de mensagem */
+.emoji-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.emoji-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de formatação de mensagem */
+.format-message-button {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.format-message-button:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+/* Efeitos para os botões de envio de mensagem */
+.send-message-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.send-message-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--primary-color);
+}
+
+/* Efeitos para os botões de cancelamento de mensagem */
+.cancel-message-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cancel-message-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de salvamento de rascunho */
+.save-draft-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.save-draft-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de descarte de rascunho */
+.discard-draft-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.discard-draft-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de visualização de rascunho */
+.preview-draft-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.preview-draft-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de agendamento de mensagem */
+.schedule-message-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.schedule-message-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de cancelamento de agendamento */
+.cancel-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cancel-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de edição de agendamento */
+.edit-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de visualização de agendamento */
+.view-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de agendamento */
+.delete-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de adição de agendamento */
+.add-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de edição de agendamento */
+.edit-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de agendamento */
+.delete-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de visualização de agendamento */
+.view-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de adição de agendamento */
+.add-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de edição de agendamento */
+.edit-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de agendamento */
+.delete-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de visualização de agendamento */
+.view-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de adição de agendamento */
+.add-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de edição de agendamento */
+.edit-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de agendamento */
+.delete-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de visualização de agendamento */
+.view-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de adição de agendamento */
+.add-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de edição de agendamento */
+.edit-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de exclusão de agendamento */
+.delete-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeitos para os botões de visualização de agendamento */
+.view-schedule-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-schedule-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  /* Ajustes para animações em dispositivos móveis (reduzir para melhor performance) */
+  .property-card:hover,
+  .stat-card:hover,
+  .feature-card:hover,
+  .testimonial-card:hover,
+  .plan-card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Reduzir sombras em dispositivos móveis */
+  .shadow-lg,
+  .shadow-xl {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* Preferências de redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
